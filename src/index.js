@@ -88,7 +88,7 @@ function setTypeColors(pokemon) {
 }
 
 $(() => {
-    $('body').removeClass('hidden-xs-up');
+    $('body').show();
 
     let search = null;
     let filter = null;
