@@ -1,13 +1,15 @@
-# run our compile script, discussed above
-./install.sh
-
-# The first and only commit to this new Git repo contains all the
-# files present with the commit message "Deploy to GitHub Pages".
+#!/bin/bash
+rm -rf out || exit 0;
+mkdir out;
+npm install -g webpack
+npm install
+webpack
+cd out
+git init
+git config user.name "Travis-CI"
+git config user.email "travis@nodemeatspace.com"
+cp ../index.html ./index.html
+cp -r ../builds/ ./builds
 git add .
-git commit -m "Deploy to GitHub Pages"
-
-# Force push from the current repo's master branch to the remote
-# repo's gh-pages branch. (All previous history on the gh-pages branch
-# will be lost, since we are overwriting it.) We redirect any output to
-# /dev/null to hide any sensitive credential data that might otherwise be exposed.
+git commit -m "Deployed to Github Pages"
 git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:gh-pages > /dev/null 2>&1

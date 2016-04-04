@@ -6,6 +6,9 @@
   "engines": {
     "node": "5"
   },
+  "scripts": {
+    "deploy": "./deploy.sh"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/DmitriyKozyatinskiy/Pokedex"
