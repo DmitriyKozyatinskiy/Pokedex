@@ -1,0 +1,10 @@
+.PokeCard {
+  height: 212px; }
+
+.PokeCard__Image {
+  height: 120px; }
+
+.PokeCard__Table td {
+  text-align: center; }
+
+/*# sourceMappingURL=Card.css.map */
