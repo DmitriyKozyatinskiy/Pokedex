@@ -6,6 +6,9 @@
   "engines": {
     "node": "5"
   },
+  "scripts": {
+    "deploy": "./deploy.sh"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/DmitriyKozyatinskiy/Pokedex"
@@ -47,7 +50,6 @@
     "font-awesome": "^4.5.0",
     "jquery": "^2.2.2",
     "jquery-sticky": "^1.0.3",
-    "list.js": "^1.2.0",
     "lodash": "^4.7.0",
     "mustache": "^2.2.1",
     "nprogress-npm": "^0.1.3",
