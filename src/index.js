@@ -7,7 +7,7 @@ import randomColor from 'randomcolor';
 import Card from './Components/Card/Card';
 import Search from './Components/Search/Search';
 import Filter from './Components/Filter/Filter';
-import {POKEMONS_URL, MEDIA_QUERIES} from './settings';
+import {POKEMONS_URL, ALL_TYPES_URL, MEDIA_QUERIES} from './settings';
 
 
 let typeColors = {};
@@ -17,7 +17,7 @@ let $loadMoreButton = null;
 
 function getAllPossibleType() {
     return new Promise(resolve => {
-        $.get('http://pokeapi.co/api/v1/type/?limit=999', response => resolve(response.objects));
+        $.get(ALL_TYPES_URL, response => resolve(response.objects));
     });
 }
 
