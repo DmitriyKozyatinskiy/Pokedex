@@ -2,3 +2,4 @@
 node_modules
 builds
 out
+npm-debug.log

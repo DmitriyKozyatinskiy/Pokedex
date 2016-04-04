@@ -1,7 +1,7 @@
 language: node_js
 node_js:
 - '5.9.0'
-script: npm run-script deploy
+script: deploy.sh
 env:
  global:
  - GH_REF: github.com/knode/node-meatspace.git
