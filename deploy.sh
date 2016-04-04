@@ -1,20 +1,5 @@
-#!/bin/bash
-set -e # exit with nonzero exit code if anything fails
-
-# clear and re-create the out directory
-rm -rf out || exit 0;
-mkdir out;
-
 # run our compile script, discussed above
 ./install.sh
-
-# go to the out directory and create a *new* Git repo
-cd out
-git init
-
-# inside this git repo we'll pretend to be a new user
-git config user.name "DmitriyKozyatinskiy"
-git config user.email "dmitriy.kozyatinskiy@gmail.com"
 
 # The first and only commit to this new Git repo contains all the
 # files present with the commit message "Deploy to GitHub Pages".
