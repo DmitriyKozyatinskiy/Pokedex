@@ -1,6 +1,8 @@
 language: node_js
 node_js:
 - '5.9.0'
+before_script:
+ - chmod +x ./deploy.sh
 script: ./deploy.sh
 env:
  global:
