@@ -21,5 +21,10 @@ TBD :(
 - [ ] Add behaviour tests
 - [ ] Add installation guide for Windows
 
+## Utils/Libraries used:
+* `npm`, `Webpack`, `Babel`, `Mustache`, `Travis`
+* `jQuery`, `LoDash`, `Bootstrap 4`
+* Lots of small js libraries
+
 ---------------------
 (c) [Dmitriy Kozyatinskiy](mailto:dmitriy.kozyatinskiy@gmail.com)
