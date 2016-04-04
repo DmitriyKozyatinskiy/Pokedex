@@ -4,6 +4,25 @@ const path = require('path');
 const autoprefixer = require('autoprefixer');
 const node_dir = __dirname + '/node_modules';
 
+plugins = [
+    new webpack.ProvidePlugin({
+        $: 'jquery',
+        jQuery: 'jquery'
+    }),
+    new webpack.ProvidePlugin({
+        'window.Tether': 'tether'
+    }),
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+        mangle:   true,
+        compress: {
+            warnings: false
+        }
+    }),
+    new ExtractTextPlugin('bundle.css', { allChunks: true })
+];
+
 module.exports = {
     entry: [
         'tether',
@@ -23,27 +42,16 @@ module.exports = {
         }
     },
 
-    plugins: [
-        new webpack.ProvidePlugin({
-            $: 'jquery',
-            jQuery: 'jquery'
-        }),
-        new webpack.ProvidePlugin({
-            NProgress: 'nprogress-npm'
-        }),
-        // new ExtractTextPlugin(node_dir + '/nprogress-npm/nprogress.css', {
-        //     allChunks: true
-        // }),
-        // new webpack.ProvidePlugin({
-        //     'Pace': 'pace-progress'
-        // }),
-        new webpack.ProvidePlugin({
-            'window.Tether': 'tether'
-        }),
-        new ExtractTextPlugin('bundle.css', { allChunks: true })
-    ],
+    plugins: plugins,
 
     module: {
+        // preLoaders: [
+        //     {
+        //         test: /\.js/,
+        //         loader: 'eslint-loader',
+        //         exclude: /node_modules/
+        //     }
+        // ],
         loaders: [
             {
                 test: /\.js/,
@@ -62,7 +70,6 @@ module.exports = {
             { test: /\.(ttf|eot)$/, loader: 'file' },
         ]
     },
-
 
     postcss: [ autoprefixer ]
 };
