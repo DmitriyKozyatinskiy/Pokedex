@@ -44,24 +44,37 @@ function loadPokemons(offset = 0) {
     });
 }
 
+function setCard(pokemon) {
+    pokemon = setTypeColors(pokemon);
+    let pokeCard = new Card('js-pokemons-list', pokemon, false, typeColors);
+    currentCards.push(pokeCard);
+
+    currentlyShowedPokemons.push(pokemon);
+    pokeCard.setOnClickEvent(() => {
+        enquire.register(MEDIA_QUERIES.xs, {
+            match: () => {
+                pokeCard.toggleDetails();
+            }
+        }).register(MEDIA_QUERIES.sm, {
+            match: () => {
+                createExtendedCard(pokemon);
+            }
+        });
+    });
+
+    return pokeCard;
+}
+
 function setCards(pokemons) {
     pokemons.forEach((pokemon, i) => {
-        pokemon = setTypeColors(pokemon);
-        let pokeCard = new Card('js-pokemons-list', pokemon, false, typeColors);
-        currentCards.push(pokeCard);
-        
-        currentlyShowedPokemons.push(pokemon);
-        pokeCard.setOnClickEvent(() => {
-            enquire.register(MEDIA_QUERIES.xs, {
-                match: () => {
-                    pokeCard.toggleDetails();
-                }
-            }).register(MEDIA_QUERIES.sm, {
-                match: () => {
-                    createExtendedCard(pokemon);
-                }
-            });
-        });
+        let isAlreadyShown = currentlyShowedPokemons
+            .find(existingPokemon => existingPokemon.pkdx_id === pokemon.pkdx_id);
+
+        if (isAlreadyShown) {
+            return;
+        }
+
+        let pokeCard = setCard(pokemon);
 
         if (i == 0) {
             pokeCard.scrollToCard();
@@ -69,8 +82,15 @@ function setCards(pokemons) {
     });
 }
 
+function updateSearchPanel (search, filter) {
+    search.updateSearch(currentlyShowedPokemons);
+    let existingTypes = getExistingTypes(currentlyShowedPokemons);
+    filter.updateFilter(existingTypes);
+}
+
 function createExtendedCard(pokemon) {
-    return pokemon ? new Card('js-pokemons-info', pokemon, true, typeColors).showDetails().setSticky() : '';
+    return pokemon ? new Card('js-pokemons-info', pokemon, true, typeColors)
+        .showDetails().setSticky() : '';
 }
 
 function getExistingTypes(currentPokemons) {
@@ -100,8 +120,32 @@ $(() => {
             setCards(pokemons);
             search = new Search('js-header', currentlyShowedPokemons);
             search
-                .setSearchOnlineEvent(searchResult => createExtendedCard(searchResult))
-                .handleSearchResultSelection(searchResult => createExtendedCard(searchResult));
+                .setSearchOnlineEvent(searchResult => {
+                    enquire.register(MEDIA_QUERIES.xs, {
+                        match: () => {
+                            setCard(searchResult).scrollToCard();
+                            updateSearchPanel(search, filter);
+                        }
+                    }).register(MEDIA_QUERIES.sm, {
+                        match: () => {
+                            createExtendedCard(searchResult);
+                        }
+                    });
+                })
+                .handleSearchResultSelection(searchResult => {
+                    enquire.register(MEDIA_QUERIES.xs, {
+                        match: () => {
+                            let existingCard = currentCards.find(card => {
+                                return card.data.pkdx_id === searchResult.pkdx_id;
+                            });
+                            existingCard.scrollToCard();
+                        }
+                    }).register(MEDIA_QUERIES.sm, {
+                        match: () => {
+                            createExtendedCard(searchResult);
+                        }
+                    });
+                });
             let existingTypes = getExistingTypes(currentlyShowedPokemons);
             filter = new Filter('js-header', existingTypes);
             filter.setFilterAction((typeToFilter, isShowAction) => {
@@ -122,15 +166,15 @@ $(() => {
         });
     });
 
+
+
     $(document)
         .ajaxSend(() => NProgress.start())
         .ajaxComplete(() => NProgress.done())
         .on('click', '#js-load-more-button', () => {
             loadPokemons(currentlyShowedPokemons.length).then(pokemons => {
                 setCards(pokemons);
-                search.updateSearch(currentlyShowedPokemons);
-                let existingTypes = getExistingTypes(currentlyShowedPokemons);
-                filter.updateFilter(existingTypes);
+                updateSearchPanel(search, filter);
             });
         });
 });
