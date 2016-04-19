@@ -128,6 +128,7 @@ $(() => {
                         }
                     }).register(MEDIA_QUERIES.sm, {
                         match: () => {
+                            searchResult = setTypeColors(searchResult);
                             createExtendedCard(searchResult);
                         }
                     });
