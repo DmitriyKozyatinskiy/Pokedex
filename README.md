@@ -22,7 +22,7 @@ TBD :(
 - [ ] Add installation guide for Windows
 
 ## Utils/Libraries used:
-* `npm`, `Webpack`, `Babel`, `Mustache`, `Travis`
+* `npm`, `Webpack`, `Babel`, `Mustache`, `SCSS`, `Travis`
 * `jQuery`, `LoDash`, `Bootstrap 4`
 * Lots of small js libraries
 
