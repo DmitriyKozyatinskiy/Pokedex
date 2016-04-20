@@ -141,8 +141,10 @@ function updateSearchPanel(search, filter) {
  */
 function createExtendedCard(pokemon) {
   $('#sticky-wrapper').remove();
-  return pokemon ? new Card('js-pokemons-info', pokemon, { isExtended: true })
-    .showDetails().setSticky() : null;
+  const card = new Card('js-pokemons-info', pokemon, { isExtended: true }).showDetails();
+  window.setTimeout(() => card.setSticky(), 0);
+  return card;
+
 }
 
 /**
