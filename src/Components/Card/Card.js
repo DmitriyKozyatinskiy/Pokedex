@@ -98,6 +98,7 @@ export default class Card {
    * @returns {Card}
    */
   setSticky() {
+    console.log(this._card);
     this._card.sticky({topSpacing: 1}).sticky('update');
 
     return this;
@@ -125,7 +126,7 @@ export default class Card {
   }
 
   /**
-   * 
+   *
    * @returns {Card}
    */
   showCard() {

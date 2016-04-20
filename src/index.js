@@ -140,7 +140,7 @@ function updateSearchPanel(search, filter) {
  * @returns {Card|null}
  */
 function createExtendedCard(pokemon) {
-  return pokemon ? new Card('js-pokemons-info', pokemon, {isExtended: true})
+  return pokemon ? new Card('js-pokemons-info', pokemon, { isExtended: true })
     .showDetails().setSticky() : null;
 }
 
