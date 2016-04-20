@@ -1,0 +1,7 @@
+.idea
+node_modules
+builds
+out
+npm-debug.log
+*.css
+*.css.map

@@ -1,0 +1,10 @@
+language: node_js
+node_js:
+- '5.9.0'
+before_script:
+ - chmod +x ./deploy.sh
+script: ./deploy.sh
+env:
+ global:
+ - GH_REF: github.com/DmitriyKozyatinskiy/Pokedex.git
+ - secure: ofAedw7y6G5hJmBdRGwHD1CM9BJtYJfD52Q62WnsH0HmXzJyXsW3KhwlB1vGEVLWIqrQk3D+arCFwcKEGtw8VWyVcctmCWOe42DWctqvOfPe0ZiI4mfPdowfaW4NIrPu/XGzN1Ll2S34Nqn16zcceXiyMeuO5WHYRq4n4gn7jGXGPiOgtEcP6yn7oLz3uEzhiSLZ6uTVEr7JiU7vTkGwa3/FUxtUQ156Pf7c5ibb0dvwcFkCVzps9nf/YJBDHOVss3Nfgf74dvCxn7VfEmWvzLzizlCgXrJ/ZknY5DUhwHp+16yiuJZtlYHJZWT1RgXIhPkKbS+r2TDoxkOsJGaJVcBdgyunSg14CDZTfp+8o7KOkAudEo+mJZ/EFBGRdFfHh27GZ7W89RLXU5q2cQhNbKyXcY4l5qMyu7Qb6cQoBrtHC/CNF+13jvc1s68PpaJB2n3JlYIxf7J7mnA+QSjMIgxS/J6FuybvFwZYKjglTM6D6hGu2j98fopxmuB4Mz0AgLvmMzChReKqJho7pYLCUHgE9Wk1cEnrLViPXb3wOuHyVY+0Wi2pcUiwwvcu9aMkoDkotwzmHRtgf6OeCqPDFmhAYGt2vq0zBIuvHehVzTBzlharMpLu07oEz2y5v7umsk6LPW5AKnL4fTaLZ6VMRPo+QW2UIPqVJHluPWZRCag=

@@ -1,0 +1,40 @@
+<div class="table-responsive PokeCard__Table">
+    <table class="table table-bordered table-sm hidden-xs-up js-details-table">
+        <tr>
+            <td>Type</td>
+            <td>{{ #types }}{{ name }} {{ /types }}</td>
+        </tr>
+        <tr>
+            <td>Attack</td>
+            <td>{{ attack }}</td>
+        </tr>
+        <tr>
+            <td>Defence</td>
+            <td>{{ defense }}</td>
+        </tr>
+        <tr>
+            <td>HP</td>
+            <td>{{ hp }}</td>
+        </tr>
+        <tr>
+            <td>SP Attack</td>
+            <td>{{ sp_atk }}</td>
+        </tr>
+        <tr>
+            <td>SP Defence</td>
+            <td>{{ sp_def }}</td>
+        </tr>
+        <tr>
+            <td>Speed</td>
+            <td>{{ speed }}</td>
+        </tr>
+        <tr>
+            <td>Weight</td>
+            <td>{{ weight }}</td>
+        </tr>
+        <tr>
+            <td>Total moves</td>
+            <td>{{ totalMoves }}</td>
+        </tr>
+    </table>
+</div>

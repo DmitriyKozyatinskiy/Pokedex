@@ -1,0 +1,18 @@
+<div class="col-xs-8 col-xs-offset-2 col-sm-offset-0 col-sm-12 col-md-6 col-lg-4 js-card-wrapper" data-types="{{ #types }}{{ name }} {{ /types }}">
+    <div class="card Cards__PokeCard">
+        <div class="card-img-top center-block PokeCard__Image">
+            <img class="card-img-top center-block" src="http://pokeapi.co/media/img/{{ pkdx_id }}.png" alt="{{ name }}">
+        </div>
+        <div class="card-block">
+            <h4 class="card-title text-xs-center">{{ name }}</h4>
+            <p class="card-text text-xs-center">
+                {{ #types }}
+                <span class="label" style="background-color: {{ color }}">{{ name }}</span>
+                {{ /types }}
+            </p>
+        </div>
+        <div class="card-block">
+            {{> details}}
+        </div>
+    </div>
+</div>
