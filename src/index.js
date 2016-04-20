@@ -34,6 +34,12 @@ const currentlyShowedPokemons = [];
 const $loadMoreButton = $('#js-load-more-button');
 
 /**
+ * 
+ * @type {jQuery|HTMLElement}
+ */
+const $extendedCardContainer = $('#js-pokemons-info');
+
+/**
  *
  * @returns {Promise}
  */
@@ -140,11 +146,9 @@ function updateSearchPanel(search, filter) {
  * @returns {Card|null}
  */
 function createExtendedCard(pokemon) {
-  $('#sticky-wrapper').remove();
-  const card = new Card('js-pokemons-info', pokemon, { isExtended: true }).showDetails();
-  window.setTimeout(() => card.setSticky(), 0);
-  return card;
-
+  $extendedCardContainer.empty();
+  return pokemon ? new Card('js-pokemons-info', pokemon, { isExtended: true })
+    .showDetails().setSticky() : null;
 }
 
 /**
