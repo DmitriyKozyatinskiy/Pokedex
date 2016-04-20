@@ -14,13 +14,12 @@ plugins = [
   }),
   new webpack.optimize.DedupePlugin(),
   new webpack.optimize.OccurenceOrderPlugin(),
-  /*
   new webpack.optimize.UglifyJsPlugin({
     mangle: true,
     compress: {
       warnings: false,
     }
-  }),*/
+  }),
   new ExtractTextPlugin('bundle.css', { allChunks: true })
 ];
 

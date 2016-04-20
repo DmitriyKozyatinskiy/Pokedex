@@ -98,12 +98,8 @@ export default class Card {
    * @returns {Card}
    */
   setSticky() {
-    console.log(this._card);
     this._card.sticky({topSpacing: 1}).sticky('update');
-    console.log(this._card);
-    console.log(this._card.parent().parent());
-    console.log(this._card.parent().parent().offset());
-    // console.log(this._card.parent().offset());
+    
     return this;
   }
 
