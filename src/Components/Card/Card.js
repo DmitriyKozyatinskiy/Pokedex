@@ -98,7 +98,7 @@ export default class Card {
    * @returns {Card}
    */
   setSticky() {
-    this._card.sticky({topSpacing: 1}).sticky('update');
+    this._card.find('.Cards__PokeCard').sticky({topSpacing: 1}).sticky('update');
     
     return this;
   }
