@@ -1,6 +1,6 @@
-var webpack = require('webpack');
-var config = require('./webpack.config');
-var compiler = webpack(config);
+const webpack = require('webpack');
+const config = require('./webpack.config');
+const compiler = webpack(config);
 compiler.run(function () {
-    console.log('Build is done!');
+  console.log('Build is done!');
 });

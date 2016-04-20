@@ -5,47 +5,79 @@ import typeLabelsTemplate from './TypeLabels.html';
 import './Filter.scss';
 
 export default class Filter {
-    constructor(filterContainerId, existingTypes = []) {
-        this.filter = null;
-        this.filterContainer = $('#' + filterContainerId);
-        this.existingTypes = existingTypes;
-        this.render();
-    }
+  /**
+   *
+   * @param {string} filterContainerId
+   * @param {Array} [existingTypes=[]]
+   */
+  constructor(filterContainerId, existingTypes = []) {
+    this._filter = null;
+    this._filterContainer = $(`#${filterContainerId}`);
+    this._existingTypes = existingTypes;
+    this._render();
+  }
 
-    setFilterAction(callback) {
-        $(document).on('click', '.js-filter-label', function () {
-            let $label = $(this);
-            let type = $label.attr('data-type').trim();
-            let isShowAction = $label.hasClass('TypeLabel--Crossed');
-            $label.toggleClass('TypeLabel--Crossed');
-            callback(type, isShowAction);
-        });
-        this.filter.on('hidden.bs.collapse', () => this.removeFilters());
-    }
+  /**
+   *
+   * @param {function} callback
+   * @returns {Filter}
+   */
+  setFilterAction(callback) {
+    $(document).on('click', '.js-filter-label', function () {
+      const $label = $(this);
+      const type = $label.attr('data-type').trim();
+      const isShowAction = $label.hasClass('TypeLabel--Crossed');
 
-    updateFilter(existingTypes) {
-        this.existingTypes = existingTypes;
-        let $labels = $(Mustache.render(typeLabelsTemplate, {types: this.existingTypes}));
-        $('#js-types-container').html($labels);
-        this.removeFilters();
-    }
+      $label.toggleClass('TypeLabel--Crossed');
+      callback(type, isShowAction);
+    });
+    this._filter.on('hidden.bs.collapse', () => this.removeFilters());
 
-    removeFilters() {
-        $('.js-filter-label', this.filterContainer).each(function () {
-            let $label = $(this);
-            let isFiltered = $label.hasClass('TypeLabel--Crossed');
-            if (isFiltered) {
-                $label.trigger('click');
-            }
-        });
-    }
+    return this;
+  }
 
-    render() {
-        this.filter = $(Mustache.render(filterTemplate, {types: this.existingTypes}, {
-            types: typeLabelsTemplate
-        }));
-        this.filterContainer.append(this.filter);
-        //this.filter = this.search.find('#js-search-input');
-        return this;
-    }
+  /**
+   *
+   * @param {Array} existingTypes
+   * @returns {Filter}
+   */
+  updateFilter(existingTypes) {
+    this._existingTypes = existingTypes;
+    const $labels = $(Mustache.render(typeLabelsTemplate, {types: this._existingTypes}));
+    $('#js-types-container').html($labels);
+    this.removeFilters();
+
+    return this;
+  }
+
+  /**
+   *
+   * @returns {Filter}
+   */
+  removeFilters() {
+    $('.js-filter-label', this._filterContainer).each(function () {
+      const $label = $(this);
+      const isFiltered = $label.hasClass('TypeLabel--Crossed');
+
+      if (isFiltered) {
+        $label.trigger('click');
+      }
+    });
+
+    return this;
+  }
+
+  /**
+   * 
+   * @returns {Filter}
+   * @private
+   */
+  _render() {
+    this._filter = $(Mustache.render(filterTemplate, {types: this._existingTypes}, {
+      types: typeLabelsTemplate
+    }));
+    this._filterContainer.append(this._filter);
+
+    return this;
+  }
 }

@@ -8,85 +8,133 @@ import {SEARCH_SETTINGS, SEARCH_URL} from './SearchSettings';
 import emptyResultMessage from './EmptyResultMessage.html';
 
 export default class Search {
-    constructor(containerId, loadedData = []) {
-        this.search = null;
-        this.loadedData = loadedData;
-        this.container = $('#' + containerId);
-        this.render().initSearch();
-    }
+  /**
+   *
+   * @param {string} containerId
+   * @param {Array} [loadedData=[]]
+   */
+  constructor(containerId, loadedData = []) {
+    this._search = null;
+    this._loadedData = loadedData;
+    this._container = $(`#${containerId}`);
+    this._render().initSearch();
+  }
 
-    render() {
-        this.search = $(Mustache.render(searchTemplate));
-        this.container.append(this.search);
-        this.search = this.search.find('#js-search-input');
-        return this;
-    }
+  /**
+   *
+   * @returns {Search}
+   */
+  initSearch() {
+    this._destroySearch();
+    this._search.typeahead(SEARCH_SETTINGS, {
+      source: this._getBloodhound(),
+      name: 'name',
+      display: suggestion => suggestion.name,
+      displayKey: suggestion => suggestion.name,
+      limit: 25,
+      templates: {
+        empty: emptyResultMessage,
+      },
+    });
 
-    initSearch() {
-        this.destroySearch();
-        this.search.typeahead(SEARCH_SETTINGS, {
-            source: this.getBloodhound(),
-            name: 'name',
-            display: suggestion => suggestion.name,
-            displayKey: suggestion => suggestion.name,
-            limit: 25,
-            templates: {
-                empty: emptyResultMessage
-            }
-        });
-        return this;
-    }
+    return this;
+  }
 
-    getBloodhound() {
-        return new Bloodhound({
-            local: this.loadedData,
-            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
-            queryTokenizer: Bloodhound.tokenizers.whitespace
-            // remote: {
-            //     url: 'http://pokeapi.co/api/v2/pokemon/%QUERY/',
-            //     wildcard: '%QUERY',
-            //     replace: (url, query) => url.replace('%QUERY', query.toLowerCase())
-            // }
-        });
-    }
+  /**
+   *
+   * @param {function} callback
+   * @returns {Search}
+   */
+  handleSearchResultSelection(callback) {
+    this._search.on('typeahead:select', (event, suggestion) => callback(suggestion));
 
-    handleSearchResultSelection(callback) {
-        this.search.on('typeahead:select', (event, suggestion) => callback(suggestion));
-    }
+    return this;
+  }
 
-    updateSearch(pokemons) {
-        this.loadedData = pokemons;
-        this.initSearch();
-        return this;
-    }
+  /**
+   *
+   * @param {Array} pokemons
+   * @returns {Search}
+   */
+  updateSearch(pokemons) {
+    this._loadedData = pokemons;
+    this.initSearch();
 
-    destroySearch() {
-        this.search.typeahead('destroy');
-        return this;
-    }
+    return this;
+  }
 
-    searchRemotely() {
-        return new Promise(resolve => {
-            $.ajax({
-                url: SEARCH_URL + this.search.val().toLowerCase() + '/',
-                beforeSend: () => this.search.typeahead('close')
-            })
-                .done(response => resolve(response))
-                .fail(() => resolve());
-        });
-    }
+  /**
+   * 
+   * @returns {Bloodhound}
+   * @private
+   */
+  _getBloodhound() {
+    return new Bloodhound({
+      local: this._loadedData,
+      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+      queryTokenizer: Bloodhound.tokenizers.whitespace,
+    });
+  }
+  
+  /**
+   * 
+   * @returns {Search}
+   * @private
+   */
+  _destroySearch() {
+    this._search.typeahead('destroy');
 
-    setSearchOnlineEvent(callback) {
-        $(document).on('click', '#js-search-button', () => {
-            this.searchRemotely().then(result => {
-                callback(result);
-            });
-        }).on('submit', '#js-search-form', event => {
-            event.preventDefault();
-            this.searchRemotely().then(result => {
-                callback(result);
-            });
-        });
-        return this;
-    }
+    return this;
+  }
+
+  /**
+   *
+   * @param {function} callback
+   * @returns {Search}
+   */
+  setSearchOnlineEvent(callback) {
+    $(document).on('click', '#js-search-button', () => {
+      this._searchRemotely().then(result => {
+        callback(result);
+      });
+    }).on('submit', '#js-search-form', event => {
+      event.preventDefault();
+      this._searchRemotely().then(result => {
+        callback(result);
+      });
+    });
+
+    return this;
+  }
+  
+  /**
+   * 
+   * @returns {Promise}
+   * @private
+   */
+  _searchRemotely() {
+    const lowerCasedSearchQuery = this._search.val().toLowerCase();
+
+    return new Promise(resolve => {
+      $.ajax({
+          url: `${SEARCH_URL}${lowerCasedSearchQuery}/`,
+          beforeSend: () => this._search.typeahead('close'),
+        })
+        .done(response => resolve(response))
+        .fail(() => resolve());
+    });
+  }
+
+  /**
+   *
+   * @returns {Search}
+   * @private
+   */
+  _render() {
+    this._search = $(Mustache.render(searchTemplate));
+    this._container.append(this._search);
+    this._search = this._search.find('#js-search-input');
+
+    return this;
+  }
 }

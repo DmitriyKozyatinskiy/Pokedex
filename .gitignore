@@ -3,3 +3,5 @@ node_modules
 builds
 out
 npm-debug.log
+src/Components/*.css
+src/Components/*.css.map
