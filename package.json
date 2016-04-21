@@ -15,9 +15,10 @@
   },
   "author": "Dmitriy Kozyatinskiy <dmitriy.kozyatinskiy@gmail.com> (https://github.com/DmitriyKozyatinskiy)",
   "bugs": {
-    "url": "https://github.com/DmitriyKozyatinskiy/Pokedex/issues"
+    "url": "https://github.com/DmitriyKozyatinskiy/Pokedex/issues",
+    "email" : "dmitriy.kozyatinskiy@gmail.com"
   },
-  "homepage": "https://github.com/DmitriyKozyatinskiy/Pokedex#readme",
+  "homepage": "http://dmitriykozyatinskiy.github.io/Pokedex/",
   "license": "MIT",
   "devDependencies": {
     "autoprefixer": "^6.1.0",
