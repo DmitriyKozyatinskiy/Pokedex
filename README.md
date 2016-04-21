@@ -17,8 +17,7 @@ TBD :(
 
 ## To Be Done:
 - [ ] Add `ESLint` check
-- [ ] Add `jsDoc` comments
-- [ ] Add behaviour tests
+- [ ] Add tests
 - [ ] Add installation guide for Windows
 
 ## Utils/Libraries used:
