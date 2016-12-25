@@ -18,3 +18,5 @@ export const MEDIA_QUERIES = {
   xs: '(max-width: 543px)',
   sm: '(min-width: 544px)',
 };
+
+zdarova
